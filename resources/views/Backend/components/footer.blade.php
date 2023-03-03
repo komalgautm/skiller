@@ -33,6 +33,7 @@
     <script src="{{ url('/dist/js/sidebarmenu.js') }}"></script>
     <!--Custom JavaScript -->
     <script src="{{ url('/dist/js/custom.min.js') }}"></script>
+    <script src="{{ url('/dist/js/main.js') }}"></script>
     <!--This page JavaScript -->
     <!-- <script src="../dist/js/pages/dashboards/dashboard1.js"></script> -->
     <!-- Charts js Files -->

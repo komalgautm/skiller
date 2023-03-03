@@ -15,32 +15,39 @@ class CitySeeder extends Seeder
     {
         //
         City::create([
+            'country_id' => 1,
             'name' => 'Adelaide',
-            'status' => 1
+            'is_deleted' => 0
         ]);
         City::create([
+            'country_id' => 1,
             'name' => 'Sydney',
-            'status' => 1
+            'is_deleted' => 0
         ]);
         City::create([
+            'country_id' => 1,
             'name' => 'Melbourne',
-            'status' => 1
+            'is_deleted' => 0
         ]);
         City::create([
+            'country_id' => 1,
             'name' => 'Canberra',
-            'status' => 1
+            'is_deleted' => 0
         ]);
         City::create([
+            'country_id' => 1,
             'name' => 'Perth',
-            'status' => 1
+            'is_deleted' => 0
         ]);
         City::create([
+            'country_id' => 1,
             'name' => 'Brisbane',
-            'status' => 1
+            'is_deleted' => 0
         ]);
         City::create([
+            'country_id' => 1,
             'name' => 'Hobart',
-            'status' => 1
+            'is_deleted' => 0
         ]);
 
     }

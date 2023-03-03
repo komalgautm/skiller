@@ -209,18 +209,26 @@
                             <th>Country Code</th>
                             <th>Country Name</th>
                             <th>Create Date</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
+                        <?php $i=1; ?>
                         @foreach($country as $countries)
                             <tr>
-                                <td>{{ $countries->id }}</td>
+                                <td>{{ $i }}</td>
                                 <td>{{ $countries->country_code }}</td>
                                 <td>{{ $countries->name }}</td>
                                 <td>{{ \Carbon\Carbon::parse($countries->created_at)->format('d-m-Y') }}</td>
-                                <td><i class="me-2 mdi mdi-account-edit"></i> |  <i class="me-2 mdi mdi-delete"></i></td>
+                                <td>@if($countries->status === 1)  
+                                    <button type="button" onclick="updateStatus(<?php echo $countries->id ?>, 0);" class="btn btn-success">Active</button>
+                                  @else 
+                                    <button type="button" onclick="updateStatus(<?php echo $countries->id ?>, 1);" class="btn btn-danger">Inactive</button>
+                                @endif</td>
+                                <td><a href="{{ url('/admin/edit-country', $countries->id) }}"><i class="me-2 mdi mdi-account-edit"></i></a>  |  <a href="{{ url('/admin/delete-country', $countries->id) }}"><i class="me-2 mdi mdi-delete"></i></a></td>
                             </tr>
+                           <?php $i++; ?> 
                         @endforeach
                       </tbody>
                       <tfoot>
@@ -250,4 +258,20 @@
           <!-- ============================================================== -->
         </div>
         @include('Backend.components.footer') 
+        
+  <script>
+    function updateStatus(id, status){
+      var token = "<?=csrf_token()?>";
+          $.ajax({
+              url:"{{ url('/admin/update-country-status') }}",    
+              type: "post",    
+              dataType: 'json',
+              data: {id: id, status: status, _token: token},
+              success:function(result){
+                console.log(result); 
+                location.reload();
+              }
+            });
+    }
+  </script>
      

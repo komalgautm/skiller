@@ -19,8 +19,8 @@ class CountryControlller extends Controller
     public function index()
     {
         $data['menu'] = Menu::where('status', 1)->get();
-        $data['country'] = Countries::where('status', 1)->get(); 
-        return view('BackEnd.ViewCountry', $data);
+        $data['country'] = Countries::where('is_deleted', 0)->get(); 
+        return view('BackEnd.CountryView', $data);
     }
 
     /**
@@ -31,7 +31,7 @@ class CountryControlller extends Controller
     public function create()
     {
         $data['menu'] = Menu::where('status', 1)->get();
-        // $data['sub_menu'] = SubMenu::where('status', 1)->get();
+        $data['sub_menu'] = SubMenu::where('status', 1)->get();
         return view('BackEnd.AddCountry', $data);
     }
 
@@ -48,13 +48,14 @@ class CountryControlller extends Controller
             'country_code' =>  $request->country_code,
             'name' => $request->country_name,
             'status' =>1,
+            'is_deleted' => 0,
             'created_at'=>date("Y-m-d H:i:s"),
             'updated_at'=>date("Y-m-d H:i:s")
         );
         
         $country = Countries::insert($country_data);
         if(isset($country)){
-          return redirect('/show-country');
+          return redirect('/admin/show-country');
         } else {
             echo "Not sent";
         }
@@ -67,11 +68,13 @@ class CountryControlller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function update_country_status(Request $request)
     {
-        //
-      
-        
+        $data = Countries::where('id', $request->id)
+       ->update([
+           'status' => $request->status
+        ]);
+        echo json_encode($data);
     }
 
     /**
@@ -82,7 +85,10 @@ class CountryControlller extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['menu'] = Menu::where('status', 1)->get();
+        $data['sub_menu'] = SubMenu::where('status', 1)->get();
+        $data['country'] = Countries::where('id', $id)->where('status', 1)->get(); 
+        return view('BackEnd.EditCountry', $data);
     }
 
     /**
@@ -92,9 +98,23 @@ class CountryControlller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $country_data = array(
+            'country_code' =>  $request->country_code,
+            'name' => $request->country_name,
+            'status' =>1,
+            'is_deleted' => 0,
+            'updated_at'=>date("Y-m-d H:i:s")
+        );
+        
+        $country = Countries::where('id', $request->country_id)->update($country_data);
+        if(isset($country)){
+          return redirect('/admin/show-country');
+        } else {
+            echo "Not sent";
+        }
     }
 
     /**
@@ -105,6 +125,7 @@ class CountryControlller extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Countries::where('id', $id)->update(['is_deleted' => 1]);   
+        return redirect('/admin/show-country');
     }
 }

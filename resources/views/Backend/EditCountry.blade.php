@@ -12,7 +12,7 @@
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="{{ url('/admin/dashboard') }}">Home</a></li>
                   <li class="breadcrumb-item active" aria-current="page">
-                    Countries
+                   Edit  Countries
                   </li>
                 </ol>
               </nav>
@@ -33,22 +33,26 @@
         <div class="row">
           <div class="col-md-12">
             <div class="card"> 
-              <form action="{{ url('/admin/add-country-data') }}"  method="Post" class="form-horizontal">
+              <form action="{{ url('/admin/edit-country-data') }}"  method="Post" class="form-horizontal">
                   @csrf
                 <div class="card-body">
-                  <h4 class="card-title">Add Country</h4>
+                  <h4 class="card-title">Edit Country</h4>
+                    @foreach($country as $countries)
+                    <input type="hidden" name="country_id" value="{{ $countries->id }}">
                   <div class="form-group row">
                     <label for="countryCode" class="col-sm-3 text-end control-label col-form-label">Country Code</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="countryCode" required name="country_code" placeholder="Country Code Here"/>  
+                      <input type="text" class="form-control" value="{{ $countries->country_code }}" id="countryCode" required name="country_code"/>  
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="CountryName" class="col-sm-3 text-end control-label col-form-label">Country Name</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="CountryName" required name="country_name" placeholder="Country Name Here"/>  
+                      <input type="text" class="form-control" value="{{ $countries->name }}" id="CountryName" required name="country_name" placeholder="Country Name Here"/>  
                     </div>
                   </div>
+
+                    @endforeach
                 </div>
                 <div class="border-top">
                   <div class="card-body">

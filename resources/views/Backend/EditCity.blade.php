@@ -6,13 +6,13 @@
       <div class="page-breadcrumb">
         <div class="row">
           <div class="col-12 d-flex no-block align-items-center">
-            <h4 class="page-title">Countries</h4>
+            <h4 class="page-title">City</h4>
             <div class="ms-auto text-end">
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="{{ url('/admin/dashboard') }}">Home</a></li>
                   <li class="breadcrumb-item active" aria-current="page">
-                    Countries
+                    City
                   </li>
                 </ol>
               </nav>
@@ -33,22 +33,34 @@
         <div class="row">
           <div class="col-md-12">
             <div class="card"> 
-              <form action="{{ url('/admin/add-country-data') }}"  method="Post" class="form-horizontal">
+              <form action="{{ url('/admin/edit-city-data') }}"  method="Post" class="form-horizontal">
                   @csrf
                 <div class="card-body">
-                  <h4 class="card-title">Add Country</h4>
+                  <h4 class="card-title">Edit City</h4>
+                  @foreach($city as $cities)
                   <div class="form-group row">
-                    <label for="countryCode" class="col-sm-3 text-end control-label col-form-label">Country Code</label>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" id="countryCode" required name="country_code" placeholder="Country Code Here"/>  
+                    <input type="hidden" name="city_id" value="{{ $cities->id }}">
+                    <label for="countryCode" class="col-sm-3 text-end control-label col-form-label">Select Country</label>
+                    <div class="col-md-9">
+                        <select class="select2 form-select shadow-none" name="country_id" required style="width: 100%; height: 36px">
+                            <option>Select</option>
+                            @foreach($country as $countries)
+                                @if($countries->id === $cities->country_id)
+                                    <option value="{{ $countries->id }}" selected>{{ $countries->name }}</option>
+                                @else
+                                    <option value="{{ $countries->id }}">{{ $countries->name }}</option>
+                                @endif
+                            @endforeach
+                      </select>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="CountryName" class="col-sm-3 text-end control-label col-form-label">Country Name</label>
+                    <label for="CountryName" class="col-sm-3 text-end control-label col-form-label">City Name</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="CountryName" required name="country_name" placeholder="Country Name Here"/>  
+                      <input type="text" class="form-control" id="CityName" required name="city_name" value="{{ $cities->name }}"/>  
                     </div>
                   </div>
+                  @endforeach
                 </div>
                 <div class="border-top">
                   <div class="card-body">

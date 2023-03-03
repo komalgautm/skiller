@@ -46,7 +46,7 @@ class SubMenuSeeder extends Seeder
             SubMenu::create([
                 'menu_id' => 3,
                 'sub_menu_name' => 'Add Cities',
-                'url' => '/show-country',
+                'url' => '/admin/add-city',
                 'order_id' => 2,
                 'icon_name' => '<i class="mdi mdi-note-outline"></i>',
                 'status' => 1
